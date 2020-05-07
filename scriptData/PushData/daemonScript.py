@@ -3,6 +3,7 @@ import requests
 import ast
 from tkinter.filedialog import *
 import json
+import time
 
 def luaFileToPython(savedVariablesString): #conversion du string du LUA en JSON
     savedVariablesString = savedVariablesString.replace('["', '"')
@@ -44,7 +45,7 @@ if not contenuChemin:
     print("Pas de chemin")
     filepath = askopenfilename(title="Fichier de données de jeu", filetypes=[('all files', '.*')]) #fenêtre graphique
                                                                                     # permettant d'indiquer le fichier du LUA
-    print("Chemin bon"+filepath)
+    print("Chemin bon : "+filepath)
     chemin.write(filepath) #écriture du chemin du fichier LUA dans chemin.txt
 else:
     print(contenuChemin)
@@ -61,6 +62,7 @@ dateInit=time.ctime(os.path.getmtime(path1))
 while(dateInit==time.ctime(os.path.getmtime(path1))): #boucle où l'on sort quand le fichier est modifié
     # print(path1)
     # print("0")
+    time.sleep(2)
     pass
 # print("modif")
 
