@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html ng-app="Accueil">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="Accueil.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+		<script src="./accueilAngular.js"></script>
+
+        <script>var whTooltips = {colorLinks: true, iconizeLinks: true, renamelinks: false, iconSize: 'large'};</script>
+        <script src="https://wow.zamimg.com/widgets/power.js"></script>
+
+		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+        <title>Accueil</title>
+    </head>
+
+    <body ng-controller="globalController" ng-style="background">
+
+
+        <div id="Accueil-page" ng-show="accueil">
+            <div id="myInputs">
+                <input id="inputPseudo" ng-model = "pseudo">
+                <div id="buttons">
+                    <input type="image" id="buttonHorde" ng-click="get('Horde')" src="images/hordeButton.png"/>
+                    <select name="Select your race" id="raceSelect" ng-model="race">
+                        <option value="">---Sélectionnez votre race---</option>
+                        <option value="">---Horde---</option>
+                        <option value="Orc">Orc</option>
+                        <option value="Mort-vivant">Mort vivant</option>
+                        <option value="Tauren">Tauren</option>
+                        <option value="Troll">Troll</option>
+                        <option value="">---Alliance---</option>
+                        <option value="Humain">Humain</option>
+                        <option value="Elfe de la nuit">Elfe de la nuit</option>
+                        <option value="Gnome">Gnome</option>
+                        <option value="Nain">Nain</option>
+                    </select>
+                    <input type="image" id="buttonAlliance" ng-click="get('Alliance')" src="images/allianceButton.png"/>
+                    <!--<button id="buttonHorde" ng-click="get('Horde')"></button>
+                    <button id="buttonAlliance" ng-click="get('Alliance')"></button>-->
+                </div>
+                <span id="inputError" ng-show="error">Erreur: personnage inexistant ou mauvaise combinaison. Veuillez réessayer.</span>
+            </div>
+        </div>
+
+        <div id="Wait-page" ng-show="loader">
+            <div class="loader"></div>
+        </div>
+
+        <div id="Armory-page" ng-show="armory">
+            <header>
+                <img id="logo" ng-src="images/logo{{faction}}.png" alt="logo de l'Alliance"/>
+                <div id="characterPseudo">
+                    <span id="characterName" ng-bind="pseudo"></span>
+                    <span id="characterGuild">{{dataPlayer["guild"][0]}}</span>
+                </div>
+                <img id="separation" src="images/separation.png" alt="separation"/>
+                <div id="characterInfo">
+                    <div id="characterInfo_top">
+                        <img id="swords" src="images/swords.png" alt="swords"/>
+                        <span>{{dataPlayer["classID"][0]}}</span>
+                    </div>
+                    <div id="characterInfo_bot">
+                        <span>Lvl-{{dataPlayer['level'][0]}}</span>
+                        <img id="elf" src="images/race.png" alt="elf"/>
+                        <span>{{dataPlayer['raceID'][0]}}</span>
+                    </div>
+                </div>
+                <div id="space"></div>
+                <img src="images/bannerBack.png" id="bannerBack" alt="bouton de retour" ng-click="back()"/>
+           </header>
+
+           <article id="itemSection" ng-controller="itemController">
+                <div id="dispositionH">
+                    <div id="itemG">
+                        <a ng-href="{{itemId[0]}}"><img id="item0" ng-src="{{itemPath[0]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[1]}}"><img id="item1" ng-src="{{itemPath[1]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[2]}}"><img id="item2" ng-src="{{itemPath[2]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[14]}}"><img id="item3" ng-src="{{itemPath[3]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[4]}}"><img id="item4" ng-src="{{itemPath[4]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[3]}}"><img id="item5" ng-src="{{itemPath[5]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[18]}}"><img id="item6" ng-src="{{itemPath[6]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[8]}}"><img id="item7" ng-src="{{itemPath[7]}}" class="item" alt="icon item"/></a>
+                    </div>
+                    
+                     <img id="perso" ng-src="images/character/{{race}}-{{gender}}.png" alt="silhouette"/>
+                    
+                    <div id="itemD">
+                        <a ng-href="{{itemId[9]}}"><img id="item8" ng-src="{{itemPath[8]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[5]}}"><img id="item9" ng-src="{{itemPath[9]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[6]}}"><img id="item10" ng-src="{{itemPath[10]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[7]}}"><img id="item11" ng-src="{{itemPath[11]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[10]}}"><img id="item12" ng-src="{{itemPath[12]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[11]}}"><img id="item13" ng-src="{{itemPath[13]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[12]}}"><img id="item14" ng-src="{{itemPath[14]}}" class="item" alt="icon item"/></a>
+                        <a ng-href="{{itemId[13]}}"><img id="item15" ng-src="{{itemPath[15]}}" class="item" alt="icon item"/></a>
+                    </div>
+                </div>
+                 <div id="itemB">
+                    <a ng-href="{{itemId[15]}}"><img id="item16" ng-src="{{itemPath[16]}}" class="item" alt="icon item"/></a>
+                    <a ng-href="{{itemId[16]}}"><img id="item17" ng-src="{{itemPath[17]}}" class="item" alt="icon item"/></a>
+                    <a ng-href="{{itemId[17]}}"><img id="item18" ng-src="{{itemPath[18]}}" class="item" alt="icon item"/></a>
+
+                </div>
+            </article>
+
+
+            <article id="statSection">
+                <div class="characterStat">
+                    <img src="images/stats/hp.png" class="characterStatIcon" alt="hp icon"/>
+                    <div class="characterStatInfo">
+                        <span class="characterStatInfoName" id="hp">Vie</span>
+                        <span class="characterStatInfoValue">{{dataPlayer["maxHealth"][0]}}</span>
+                    </div>
+                </div>
+                <div class="characterStat">
+                    <img src="images/stats/mana.png" class="characterStatIcon" alt="mana icon"/>
+                    <div class="characterStatInfo">
+                        <span class="characterStatInfoName" id="mana">Mana</span>
+                        <span class="characterStatInfoValue">{{dataPlayer["maxpower"][0]}}</span>
+                    </div>
+                </div>
+                <div class="characterStat">
+                    <img src="images/stats/int.png" class="characterStatIcon" alt="int icon"/>
+                    <div class="characterStatInfo">
+                        <span class="characterStatInfoName" id="int">Intelligence</span>
+                        <span class="characterStatInfoValue">{{dataPlayer["intellect"][0]}}</span>
+                    </div>
+                </div>
+                <div class="characterStat">
+                    <img src="images/stats/stamina.png" class="characterStatIcon" alt="stamina icon"/>
+                    <div class="characterStatInfo">
+                        <span class="characterStatInfoName" id="stamina">Endurance</span>
+                        <span class="characterStatInfoValue">{{dataPlayer["stamina"][0]}}</span>
+                    </div>
+                </div>
+                <div class="characterStat">
+                    <img src="images/stats/critc.png" class="characterStatIcon" alt="critc icon"/>
+                    <div class="characterStatInfo">
+                        <span class="characterStatInfoName" id="critc">Coup critique</span>
+                        <span class="characterStatInfoValue">{{dataPlayer["critChance"][0].slice(0, 3)}}%</span>
+                    </div>
+                </div>
+                <div class="characterStat">
+                    <img src="images/stats/haste.png" class="characterStatIcon" alt="haste icon"/>
+                    <div class="characterStatInfo">
+                        <span class="characterStatInfoName" id="haste">Hâte</span>
+                        <span class="characterStatInfoValue">{{dataPlayer["haste"][0].slice(0, 3)}}%</span>
+                    </div>
+                </div>
+                <div class="characterStat">
+                    <img src="images/stats/strength.png" class="characterStatIcon" alt="strength icon"/>
+                    <div class="characterStatInfo">
+                        <span class="characterStatInfoName" id="strength">Force</span>
+                        <span class="characterStatInfoValue">{{dataPlayer["strength"][0]}}</span>
+                    </div>
+                </div>
+                <div class="characterStat">
+                    <img src="images/stats/spirit.png" class="characterStatIcon" alt="spirit icon"/>
+                    <div class="characterStatInfo">
+                        <span class="characterStatInfoName" id="spirit">Esprit</span>
+                        <span class="characterStatInfoValue">{{dataPlayer["spirit"][0]}}</span>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+    </body>
+
+
+    
+</html>
