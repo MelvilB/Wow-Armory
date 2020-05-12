@@ -64,10 +64,7 @@ while(dateInit==time.ctime(os.path.getmtime(path1))): #boucle où l'on sort quan
     # print("0")
     time.sleep(2)
     pass
-# print("modif")
-
-
-
+#print("modif")
 
 text=open(path1,"r+")
 stringSavedVariable=text.read() #lit le fichier de sortie du LUA
@@ -79,7 +76,7 @@ dict=json.loads(jsonString) #création d'un dictionnaire à partir d'un string J
 
 #print(dict)
 
-URL_SITE = "https://mysterious-lake-46753.herokuapp.com/hello/"
-r = requests.post(url = URL_SITE, data = dict) #requête vers le backend
+URL_SITE = "https://mysterious-lake-46753.herokuapp.com/script"
+r = requests.get(url = URL_SITE, params = dict) #requête vers le backend
 # parseData=r.text
 # print(parseData)
