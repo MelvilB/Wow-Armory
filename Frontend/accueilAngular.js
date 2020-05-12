@@ -106,7 +106,7 @@ app.controller("globalController", function($scope){
 			    }
 			};
 			
-			request.open("GET", "https://mysterious-lake-46753.herokuapp.com/data/?pseudo=" + $scope.pseudo + "&faction=" + $scope.faction + "&race=" + $scope.race);
+			request.open("GET", "https://wowarmorybackend.herokuapp.com/data/?pseudo=" + $scope.pseudo + "&faction=" + $scope.faction + "&race=" + $scope.race);
 			request.send();
 
 			/*while(verif==false){
