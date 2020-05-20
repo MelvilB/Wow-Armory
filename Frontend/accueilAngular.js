@@ -2,6 +2,7 @@ var app = angular.module("Accueil", []);
 
 app.controller("globalController", function($scope){
 	$scope.pseudo="";
+	$scope.user="";
 	$scope.faction="";
 	$scope.race="";
 	$scope.gender="";
@@ -13,9 +14,12 @@ app.controller("globalController", function($scope){
 	$scope.itemPath = new Array(19);
 	$scope.loader=false;
 	$scope.error=false;
+	$scope.error2=false;
+	$scope.showLogin=false;
 	//$scope.itemId = [-1,-1,-1,135029,132624,132495,134583,132535,132602,132938,-1,-1,-1,-1,133754,135350,-1,-1,-1];
 
 	$scope.get = async function(faction){
+		$scope.error2=false;
 		if($scope.pseudo.length >= 2 && $scope.pseudo.length <= 12){
 			if($scope.race==""){
 				$scope.error=true;
@@ -96,8 +100,8 @@ app.controller("globalController", function($scope){
 					        	}
 					        }
 					        //verif = true;
-					        console.log($scope.race);
-					        console.log($scope.gender);
+					        //console.log($scope.race);
+					        //console.log($scope.gender);
 					        $scope.loader = false;
 					        $scope.error = false;
 					        $scope.$apply();
@@ -106,7 +110,7 @@ app.controller("globalController", function($scope){
 			    }
 			};
 			
-			request.open("GET", "https://wowarmorybackend.herokuapp.com/data/?pseudo=" + $scope.pseudo + "&faction=" + $scope.faction + "&race=" + $scope.race);
+			request.open("GET", "https://wowarmorybackend.herokuapp.com/data/?pseudo=" + $scope.pseudo + "&faction=" + $scope.faction + "&race=" + $scope.race + "&user=" + $scope.user);
 			request.send();
 
 			/*while(verif==false){
@@ -140,6 +144,47 @@ app.controller("globalController", function($scope){
 		$scope.itemPath.clear();*/
 		$scope.$apply();
 	};
+
+	$scope.accountCreation = function(){
+		var pseudoInput = document.getElementById('pseudoInput').value;
+		var passwordInput = document.getElementById('passwordInput').value;
+		var passwordInputConf = document.getElementById('passwordInputConf').value;
+		console.log(pseudoInput);
+		console.log(passwordInput);
+		console.log(passwordInputConf);
+		$scope.error=false;
+		$scope.error2=false;
+		if(passwordInput!=passwordInputConf || passwordInput=="" || pseudoInput=="" || passwordInputConf==""){
+			console.log("erreur");
+			$scope.error2=true;
+		} else {
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				//console.log("réception du message");
+				if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+			        var response = JSON.parse(this.responseText);
+			        //console.log(response["login"]);
+			        if(response["login"]=="echec"){
+			        	$scope.error2=true;
+			        	//console.log("echec");
+			        	$scope.$apply();
+			        } else {
+			        	$scope.showLogin=false;
+			        	//console.log("succès");
+			        	$scope.$apply();
+			        }
+			    }
+			}
+			request.open("GET", "https://wowarmorybackend.herokuapp.com/login/?pseudoInput=" + pseudoInput + "&passwordInput=" + passwordInput);
+			request.send();
+		}
+
+		document.getElementById('pseudoInput').value="";
+		document.getElementById('passwordInput').value="";
+		document.getElementById('passwordInputConf').value="";
+		$scope.$apply();
+	}
+
 });
 
 app.controller("itemController", function($scope){

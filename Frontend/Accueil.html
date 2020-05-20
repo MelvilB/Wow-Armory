@@ -17,8 +17,33 @@
 
 
         <div id="Accueil-page" ng-show="accueil">
+            <div id="login">
+                <input type="image" id="loginButton" src="images/loginButton.png" ng-click="showLogin=!showLogin">
+                <div id="backgroundLogin" ng-show="showLogin">
+                    <div id="backgroundLoginLine">
+                        <div id="loginRegistration">
+                            <span id="creationAccount">Création de compte</span>
+                            <div class="loginRegistrationInput">
+                                <label for="pseudo">Votre pseudo :</label>
+                                <input type="text" name="pseudo" id="pseudoInput" />
+                            </div>
+                            <div class="loginRegistrationInput">
+                                <label for="pass">Votre mot de passe :</label>
+                                <input type="password" name="pass" id="passwordInput" />
+                            </div>
+                            <div class="loginRegistrationInput">
+                                <label for="pass">Confirmer votre mot de passe :</label>
+                                <input type="password" name="pass" id="passwordInputConf" />
+                            </div>
+                            <input type="button" id="inputAccount" value="Confirmer" ng-click="accountCreation()" />
+                        </div>
+                        <div id="spaceLogin"></div>
+                    </div>
+                </div>
+            </div>
             <div id="myInputs">
-                <input id="inputPseudo" ng-model = "pseudo">
+                <input id="inputPseudo" ng-model="pseudo" placeholder="Entrez le nom de votre personnage wow">
+                <input id="inputUser" ng-model="user" placeholder="Entrez le pseudo du compte wow-armory">
                 <div id="buttons">
                     <input type="image" id="buttonHorde" ng-click="get('Horde')" src="images/hordeButton.png"/>
                     <select name="Select your race" id="raceSelect" ng-model="race">
@@ -38,7 +63,8 @@
                     <!--<button id="buttonHorde" ng-click="get('Horde')"></button>
                     <button id="buttonAlliance" ng-click="get('Alliance')"></button>-->
                 </div>
-                <span id="inputError" ng-show="error">Erreur: personnage inexistant ou mauvaise combinaison. Veuillez réessayer.</span>
+                <span class="inputError" ng-show="error">Erreur: Personnage inexistant ou mauvaise combinaison. Veuillez réessayer.</span>
+                <span class="inputError" ng-show="error2">Erreur: Champ(s) vide(s) ou mots de passe non concordants ou pseudo déjà utilisé. Veuillez réessayer.</span>
             </div>
         </div>
 
@@ -50,6 +76,7 @@
             <header>
                 <img id="logo" ng-src="images/logo{{faction}}.png" alt="logo de l'Alliance"/>
                 <div id="characterPseudo">
+                    <span id="userName">{{dataPlayer["userName"][0]}}</span>
                     <span id="characterName" ng-bind="pseudo"></span>
                     <span id="characterGuild">{{dataPlayer["guild"][0]}}</span>
                 </div>
@@ -167,6 +194,7 @@
 
     </body>
 
-
     
 </html>
+
+    
